@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id                String   @id @default(uuid())
+  name              String
+  email             String   @unique
+  phone             String
+  passwordHash      String
+  isVerified        Boolean  @default(false)
+  verificationToken String?
+  resetToken        String?
+  resetTokenExpiry  DateTime?
+  createdAt         DateTime @default(now())
+  
+  reservations      Reservation[]
+}
+
+model MenuItem {
+  id                String  @id @default(uuid())
+  name              String
+  category          String
+  priceFull         Int?
+  priceHalf         Int?
+  type              String  // VEG, NON_VEG
+  description       String?
+  isChefRecommended Boolean @default(false)
+}
+
+model Reservation {
+  id             String   @id @default(uuid())
+  bookingId      String   @unique
+  customerName   String
+  phone          String
+  email          String?
+  guests         Int
+  date           String
+  time           String
+  specialRequest String?
+  status         String   @default("PENDING") // PENDING, CONFIRMED, REJECTED
+  createdAt      DateTime @default(now())
+
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id])
+}

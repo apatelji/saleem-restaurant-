@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #121414;
+  --color-surface: #121414;
+  --color-surface-container-low: #1a1c1c;
+  --color-surface-container: #1e2020;
+  --color-surface-container-high: #282a2b;
+  --color-on-surface: #e2e2e2;
+  --color-on-surface-variant: #c4c7c7;
+  --color-primary: #c9c6c5;
+  --color-on-primary: #313030;
+  --color-secondary: #e9c349;
+  --color-on-secondary: #3c2f00;
+  --color-outline: #8e9192;
+  --color-outline-variant: #444748;
+
+  --font-display: "Noto Serif", serif;
+  --font-body: "Be Vietnam Pro", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-on-surface font-body antialiased min-h-screen flex flex-col relative overflow-x-hidden selection:bg-secondary selection:text-on-secondary;
+  }
+}
+
+@layer utilities {
+  .vignette-image {
+    position: relative;
+  }
+  .vignette-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, transparent 50%, rgba(10, 10, 10, 0.8) 100%);
+    pointer-events: none;
+  }
+  
+  .gold-interactive {
+    transition: all 0.3s ease;
+  }
+  .gold-interactive:hover, .gold-interactive:focus {
+    box-shadow: 0 0 15px rgba(233, 195, 73, 0.15);
+    border-color: #e9c349;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
